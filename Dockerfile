@@ -32,7 +32,7 @@ COPY . .
 # Requires --build-arg HF_TOKEN=<your_token> during build
 ARG HF_TOKEN
 ENV HF_TOKEN=$HF_TOKEN
-RUN python -c "import os; from transformers import AutoModel, AutoTokenizer; t = os.environ.get('HF_TOKEN'); [AutoTokenizer.from_pretrained('ai4bharat/indic-bert', token=t), AutoModel.from_pretrained('ai4bharat/indic-bert', token=t)] if t else print('WARNING: HF_TOKEN missing. Skipping pre-download.')"
+RUN python -c "import os\ntry:\n    from transformers import AutoModel, AutoTokenizer\n    t = os.environ.get('HF_TOKEN')\n    if t:\n        AutoTokenizer.from_pretrained('ai4bharat/indic-bert', token=t)\n        AutoModel.from_pretrained('ai4bharat/indic-bert', token=t)\n    else:\n        print('No HF_TOKEN')\nexcept Exception as e:\n    print('Pre-download failed, will retry at runtime:', e)"
 
 
 # Ensure data directory exists
