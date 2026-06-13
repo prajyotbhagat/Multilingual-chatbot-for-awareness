@@ -32,7 +32,7 @@ COPY . .
 # Requires --build-arg HF_TOKEN=<your_token> during build
 ARG HF_TOKEN
 ENV HF_TOKEN=$HF_TOKEN
-RUN python -c "from transformers import AutoModel, AutoTokenizer; AutoTokenizer.from_pretrained('ai4bharat/indic-bert', token='$HF_TOKEN'); AutoModel.from_pretrained('ai4bharat/indic-bert', token='$HF_TOKEN')"
+RUN python -c "import os; from transformers import AutoModel, AutoTokenizer; t = os.environ.get('HF_TOKEN'); AutoTokenizer.from_pretrained('ai4bharat/indic-bert', token=t); AutoModel.from_pretrained('ai4bharat/indic-bert', token=t)"
 
 
 # Ensure data directory exists
