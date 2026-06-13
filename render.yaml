@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: welfare-chatbot
+    env: docker
+    plan: free
+    dockerCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: HF_TOKEN
+        sync: false
